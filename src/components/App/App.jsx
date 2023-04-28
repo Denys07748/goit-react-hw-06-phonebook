@@ -1,75 +1,75 @@
-import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
-import {Container, TitleMain, TitleSec} from './App.styled'
+// import { useEffect } from 'react';
+import { Container, TitleMain, TitleSec } from './App.styled';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
+import { useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
 
 const App = () => {
-  const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('contacts')) ?? []);
-  const [filter, setFilter] = useState('');
+  const contacts = useSelector(getContacts);
+  // const [contacts, setContacts] = useState(
+  //   () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  // );
+  // const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
 
-  const addContact = contactData => {
-    const isIncludes = contacts.some(({name, number}) => 
-        name.toLowerCase() === contactData.name.toLowerCase() ||
-        number === contactData.number
-        ); 
-    if(isIncludes) {
-      alert('A contact with the same name or number is already in contacts');
-      return;
-    }
+  // const addContact = contactData => {
+  //   const isIncludes = contacts.some(
+  //     ({ name, number }) =>
+  //       name.toLowerCase() === contactData.name.toLowerCase() ||
+  //       number === contactData.number
+  //   );
+  //   if (isIncludes) {
+  //     alert('A contact with the same name or number is already in contacts');
+  //     return;
+  //   }
 
-    const newContact = {
-      id: nanoid(5),
-      ...contactData,
-    }
-  
-    setContacts(state => [newContact, ...state]);
-  };
+  //   const newContact = {
+  //     id: nanoid(5),
+  //     ...contactData,
+  //   };
 
-  const changeFilter = e => {
-    setFilter(e.currentTarget.value)
-  };
+  //   setContacts(state => [newContact, ...state]);
+  // };
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
+  // const changeFilter = e => {
+  //   setFilter(e.currentTarget.value);
+  // };
 
-    return contacts.filter(({name}) => 
-      name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+  // const getVisibleContacts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
 
-  const deleteContact = contactId => {
-    setContacts(state => state.filter(({id}) => id !== contactId));
-  };
+  //   return contacts.filter(({ name }) =>
+  //     name.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
 
+  // const deleteContact = contactId => {
+  //   setContacts(state => state.filter(({ id }) => id !== contactId));
+  // };
 
-    return (
-      <Container>
-        <TitleMain>Phonebook</TitleMain>
-        <ContactForm 
-          onSubmit={addContact}
-        />
+  return (
+    <Container>
+      <TitleMain>Phonebook</TitleMain>
+      <ContactForm />
 
-        <TitleSec>Contacts</TitleSec>
-        {contacts.length === 0 ? (
-            <p>There are no contacts in your phone book yet. Please add contacts.</p>
-          ) : (
-            <>
-              <Filter value={filter} onChange={changeFilter}/>
-              {getVisibleContacts().length === 0 ? (
-                <p>Сontacts not found</p>
-                ) : (
-                <ContactList contacts={getVisibleContacts()} onDeleteContact={deleteContact}/>
-                )}
-            </>
-          )}
-      </Container>
-    );
+      <TitleSec>Contacts</TitleSec>
+      {contacts.length === 0 ? (
+        <p>
+          There are no contacts in your phone book yet. Please add contacts.
+        </p>
+      ) : (
+        <>
+          <Filter />
+          <ContactList />
+        </>
+      )}
+    </Container>
+  );
 };
 
 export default App;
