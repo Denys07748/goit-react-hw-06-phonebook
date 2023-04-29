@@ -15,7 +15,6 @@ const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const visibleContacts = getVisibleContacts(contacts, filter);
-  console.log(visibleContacts.length);
 
   return visibleContacts.length === 0 ? (
     <p>Сontacts not found</p>

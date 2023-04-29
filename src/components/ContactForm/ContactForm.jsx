@@ -51,7 +51,7 @@ const ContactForm = () => {
       alert('A contact with the same name or number is already in contacts');
       return;
     }
-    // onSubmit(values);
+
     dispatch(addContact(values));
     resetForm();
   };
@@ -80,7 +80,3 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
-
-// ContactForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };

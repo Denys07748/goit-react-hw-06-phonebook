@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-
 export const ContactsList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -32,6 +31,6 @@ export const ContactEl = styled.li`
   }
 
   button:hover {
-        background-color: blue;
-    }
+    background-color: blue;
+  }
 `;
